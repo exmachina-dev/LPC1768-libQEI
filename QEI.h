@@ -1,15 +1,19 @@
 #ifndef QEI_H_
 #define QEI_H_
 
-#include "mbed.h"
+#ifndef TARGET_LPC176X
+#error This library is only compatible with the LPC1768
+#endif
+
+#include "pinmap.h"
 
 typedef enum {
-    QEI_INDEX       = 0x01;
-    QEI_VELOCITY    = 0x02;
-    QEI_POSITION    = 0x04;
-    QEI_2XCOUNT     = 0x08;
-    QEI_SIGNAL_MODE = 0x0F;
-    // QEI_SIGNAL_MODE = 0x0F;
+    QEI_NONE        = 0x00,
+    QEI_INDEX       = 0x01,
+    QEI_VELOCITY    = 0x02,
+    QEI_POSITION    = 0x04,
+    QEI_4XCOUNT     = 0x08,
+    QEI_SIGNAL_MODE = 0x0F,
 } QEIConfig_t;
 
 class QEI {
@@ -18,20 +22,18 @@ class QEI {
 
         int getPulses(void);
 
-        void setFilterDelay(uint16_t delay);
+        int getRevolutions(void);
 
-        static const PinMap PinMap_QEI[] = {
-            {P1_20, QEI0_A, 1},
-            {P1_23, QEI0_B, 1},
-            {P1_24, QEI0_I, 1},
-            {NC,    NC,     0}
-        }
+        void setFilterDelay(int delay);
 
     private:
+        void qei_get_pulses(void);
+        void qei_set_direction(bool invert);
+        void qei_set_invert_index(bool invert);
         void qei_set_signal_mode(bool signal_mode);
         void qei_set_capture_mode(bool capture_mode);
 
-        int32_t pulses;
-        int32_t revolutions;
-}
+        int pulses;
+        int revolutions;
+};
 #endif
