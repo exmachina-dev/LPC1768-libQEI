@@ -11,7 +11,7 @@ static const PinMap PinMap_QEI[] = {    // Might be no needed
     {NC,    NC,     0}
 };
 
-QEI::QEI(QEIConfig_t opts) {
+QEI::QEI(QEIConfig_t opts, int ppr) {
     LPC_SC->PCONP |= (1 << 18);         // Enable power for the QEI module
 
     // set PCLK of QEI to CCLK/1 (1:0)
@@ -46,6 +46,8 @@ QEI::QEI(QEIConfig_t opts) {
     LPC_QEI->FILTER = 3;                // Digital filter (debounce). In order
                                         // to get counted, the new state must be
                                         // maintain n clock ticks. (0 to bypass)
+
+    pulses_per_rev = (float)ppr;
 } 
 
 int QEI::getPulses(void) {
@@ -53,8 +55,18 @@ int QEI::getPulses(void) {
     return pulses;
 }
 
+float QEI::getRevolutions(void) {
+    qei_get_revolutions();
+    return revolutions;
+}
+
 void QEI::qei_get_pulses(void) {
     pulses = LPC_QEI->QEIPOS;           // Read position register
+}
+
+void QEI::qei_get_revolutions(void) {
+    qei_get_pulses();
+    revolutions = (float)(pulses / pulses_per_rev);
 }
 
 void QEI::qei_set_direction(bool invert) {

@@ -18,22 +18,24 @@ typedef enum {
 
 class QEI {
     public:
-        QEI(QEIConfig_t opts);
+        QEI(QEIConfig_t opts, int ppr);
 
         int getPulses(void);
 
-        int getRevolutions(void);
+        float getRevolutions(void);
 
         void setFilterDelay(int delay);
 
     private:
         void qei_get_pulses(void);
+        void qei_get_revolutions(void);
         void qei_set_direction(bool invert);
         void qei_set_invert_index(bool invert);
         void qei_set_signal_mode(bool signal_mode);
         void qei_set_capture_mode(bool capture_mode);
 
         int pulses;
-        int revolutions;
+        float pulses_per_rev;
+        float revolutions;
 };
 #endif
