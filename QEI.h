@@ -11,6 +11,8 @@ class QEI {
     public:
         QEI(QEIConfig_t opts);
 
+        void setTimeInterval(int time);
+
         int getPulses(void);
 
         int getRevolutions(void);

@@ -38,6 +38,14 @@ void qei_init_index(void) {
     pin_mode(P1_24, PullDown);
 }
 
+void qei_set_velocity_period(int frequency) {
+    uint32_t timer_reload;
+
+    timer_reload = SystemCoreClock / frequency;
+    LPC_QEI->QEILOAD = timer_reload;
+}
+
+
 // QEIPOS
 void qei_get_pulses(int *pulses) {
     *pulses = LPC_QEI->QEIPOS;              // Read position register

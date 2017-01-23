@@ -26,6 +26,10 @@ QEI::QEI(QEIConfig_t opts) {
                                         // maintain n clock ticks. (0 to bypass)
 } 
 
+void QEI::setTimeInterval(int time) {
+    qei_set_velocity_period(time);
+}
+
 int QEI::getPulses(void) {
     qei_get_pulses(&pulses);
     return pulses;

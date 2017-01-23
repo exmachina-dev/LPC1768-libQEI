@@ -11,6 +11,8 @@
 void qei_init(QEIConfig_t opts);
 void qei_init_index(void);
 
+void qei_set_velocity_period(int frequency);
+
 void qei_get_pulses(int *pulses);
 void qei_set_max_pulses(int max_pos);
 void qei_get_index_count(int *count);
