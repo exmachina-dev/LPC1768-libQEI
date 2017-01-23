@@ -5,6 +5,7 @@
 
 #include "QEI_api.h"
 
+#define QEI_PCLK_DIV        (8)
 
 static const PinMap PinMap_QEI[] = {        // Might be no needed
     {P1_20, (int)LPC_QEI_BASE, 1},
@@ -13,12 +14,31 @@ static const PinMap PinMap_QEI[] = {        // Might be no needed
     {NC,    NC,     0}
 };
 
+int qei_get_pclk_reg(uint8_t pclk_div) {
+    switch (pclk_div) {
+        case 1:
+            return 0b01;
+            break;
+        case 2:
+            return 0b10;
+            break;
+        case 4:
+            return 0b00;
+            break;
+        case 8:
+            return 0b11;
+            break;
+        default:
+            return 0b00;
+    }
+}
+
 void qei_init(QEIConfig_t opts) {
     LPC_SC->PCONP |= (1 << 18);             // Enable power for the QEI module
 
     // set PCLK of QEI to CCLK/1 (1:0)
     LPC_SC->PCLKSEL1 &= ~(0b11);
-    LPC_SC->PCLKSEL1 |= (0b10);
+    LPC_SC->PCLKSEL1 |= (qei_get_pclk_reg(QEI_PCLK_DIV));
 
     pinmap_pinout(P1_20, PinMap_QEI);
     pinmap_pinout(P1_23, PinMap_QEI);
@@ -38,11 +58,11 @@ void qei_init_index(void) {
     pin_mode(P1_24, PullDown);
 }
 
-void qei_set_velocity_period(int frequency) {
-    uint32_t timer_reload;
+void qei_set_velocity_frequency(int frequency) {
+    uint32_t tick_number;
 
-    timer_reload = SystemCoreClock / frequency;
-    LPC_QEI->QEILOAD = timer_reload;
+    tick_number = SystemCoreClock / (frequency * QEI_PCLK_DIV);
+    LPC_QEI->QEILOAD = tick_number;
 }
 
 
@@ -72,8 +92,11 @@ void qei_get_velocity_capture(int *velocity_capture) {
 }
 
 // FILTER
-void qei_set_filter(int filter) {
-    LPC_QEI->FILTER = filter;               // Set filter value
+void qei_set_filter(int filter_frequency) {
+    uint32_t sample_number;
+
+    sample_number = SystemCoreClock / (filter_frequency * QEI_PCLK_DIV);
+    LPC_QEI->FILTER = sample_number;        // Set filter value
 }
 
 // QEICONF options

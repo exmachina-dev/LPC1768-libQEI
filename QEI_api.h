@@ -11,14 +11,14 @@
 void qei_init(QEIConfig_t opts);
 void qei_init_index(void);
 
-void qei_set_velocity_period(int frequency);
+void qei_set_velocity_frequency(int frequency);
 
 void qei_get_pulses(int *pulses);
 void qei_set_max_pulses(int max_pos);
 void qei_get_index_count(int *count);
 void qei_get_velocity(int *velocity);
 void qei_get_velocity_capture(int *velocity_capture);
-void qei_set_filter(int filter);
+void qei_set_filter(int filter_frequency);
 void qei_set_direction(bool invert);
 void qei_set_invert_index(bool invert);
 void qei_set_signal_mode(bool signal_mode);
