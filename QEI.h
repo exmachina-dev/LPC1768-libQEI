@@ -13,18 +13,26 @@ class QEI {
 
         void setVelocityFrequency(int frequency);
 
+        void setPPR(int ppr);
+        void setMaxPosition(int pulses);
+        void setFilterFrequency(int filter_freq);
+        void setLinearFactor(float linear_factor);
+
         int getPulses(void);
 
         int getRevolutions(void);
 
         int getInstantVelocity(void);
 
-        int getVelocity(void);
+        float getVelocity(void);
+        float getSpeed(void);
 
         void setFilterDelay(int delay);
 
     private:
         int velocity_frequency;
+        float pulses_per_rev;
+        float linear_factor;
         int pulses;
         int revolutions;
         int velocity;
