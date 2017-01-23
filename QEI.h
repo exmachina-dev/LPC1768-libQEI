@@ -5,16 +5,7 @@
 #error This library is only compatible with the LPC1768
 #endif
 
-#include "pinmap.h"
-
-typedef enum {
-    QEI_NONE        = 0x00,
-    QEI_INDEX       = 0x01,
-    QEI_VELOCITY    = 0x02,
-    QEI_POSITION    = 0x04,
-    QEI_4XCOUNT     = 0x08,
-    QEI_SIGNAL_MODE = 0x0F,
-} QEIConfig_t;
+#include "QEI_config.h"
 
 class QEI {
     public:

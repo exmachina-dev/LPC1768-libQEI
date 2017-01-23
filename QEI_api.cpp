@@ -1,8 +1,10 @@
-#include "QEI.h"
 #include "LPC17XX.h"
 
 #include "cmsis.h"
 #include "pinmap.h"
+
+#include "QEI_api.h"
+
 
 static const PinMap PinMap_QEI[] = {        // Might be no needed
     {P1_20, (int)LPC_QEI_BASE, 1},
