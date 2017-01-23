@@ -11,7 +11,7 @@ class QEI {
     public:
         QEI(QEIConfig_t opts);
 
-        void setTimeInterval(int time);
+        void setVelocityFrequency(int frequency);
 
         int getPulses(void);
 
@@ -24,6 +24,7 @@ class QEI {
         void setFilterDelay(int delay);
 
     private:
+        int velocity_frequency;
         int pulses;
         int revolutions;
         int velocity;

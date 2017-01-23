@@ -21,13 +21,14 @@ QEI::QEI(QEIConfig_t opts) {
         qei_set_capture_mode(false);     // Count A & B edges (more resolution but less range)
 
     qei_set_max_pulses(0xFFFFFFFF);     // Allow QEI to count up to maximum range
-    qei_set_filter(3);                  // Digital filter (debounce). In order
+    qei_set_filter(1000000);                  // Digital filter (debounce). In order
                                         // to get counted, the new state must be
                                         // maintain n clock ticks. (0 to bypass)
 } 
 
-void QEI::setTimeInterval(int time) {
-    qei_set_velocity_period(time);
+void QEI::setVelocityFrequency(int time) {
+    velocity_frequency = time;
+    qei_set_velocity_frequency(time);
 }
 
 int QEI::getPulses(void) {
