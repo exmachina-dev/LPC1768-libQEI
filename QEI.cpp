@@ -3,27 +3,8 @@
 
 #include "QEI_api.h"
 
-<<<<<<< HEAD
-QEI::QEI(QEIConfig_t opts, int ppr) {
-    LPC_SC->PCONP |= (1 << 18);         // Enable power for the QEI module
-
-    // set PCLK of QEI to CCLK/1 (1:0)
-    LPC_SC->PCLKSEL1 &= ~(0b11);
-    LPC_SC->PCLKSEL1 |= (0b10);
-
-    pinmap_pinout(P1_20, PinMap_QEI);
-    pinmap_pinout(P1_23, PinMap_QEI);
-
-    // set PhA and PhB pins to QEI mode
-    pin_function(P1_20, 1);
-    pin_function(P1_23, 1);
-    pin_mode(P1_20, PullDown);
-    pin_mode(P1_23, PullDown);
-
-=======
 QEI::QEI(QEIConfig_t opts) {
     qei_init(opts);
->>>>>>> 2f1147ca5a6cf27097a7fde6955619ee52ba6b2c
 
     if (opts & QEI_INDEX) {
         qei_init_index();
@@ -39,8 +20,6 @@ QEI::QEI(QEIConfig_t opts) {
     qei_set_filter(3);                  // Digital filter (debounce). In order
                                         // to get counted, the new state must be
                                         // maintain n clock ticks. (0 to bypass)
-
-    pulses_per_rev = (float)ppr;
 } 
 
 int QEI::getPulses(void) {

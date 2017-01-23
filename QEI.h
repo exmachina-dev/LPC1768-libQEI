@@ -18,11 +18,11 @@ typedef enum {
 
 class QEI {
     public:
-        QEI(QEIConfig_t opts, int ppr);
+        QEI(QEIConfig_t opts);
 
         int getPulses(void);
 
-        float getRevolutions(void);
+        int getRevolutions(void);
 
         int getInstantVelocity(void);
 
