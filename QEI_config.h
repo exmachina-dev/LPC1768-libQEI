@@ -7,7 +7,7 @@ typedef enum {
     QEI_VELOCITY    = 0x02,
     QEI_POSITION    = 0x04,
     QEI_4XCOUNT     = 0x08,
-    QEI_SIGNAL_MODE = 0x0F,
+    QEI_SIGNAL_MODE = 0x10,
 } QEIConfig_t;
 
 #endif
