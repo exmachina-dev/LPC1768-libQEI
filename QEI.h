@@ -24,18 +24,16 @@ class QEI {
 
         float getRevolutions(void);
 
+        int getInstantVelocity(void);
+
+        int getVelocity(void);
+
         void setFilterDelay(int delay);
 
     private:
-        void qei_get_pulses(void);
-        void qei_get_revolutions(void);
-        void qei_set_direction(bool invert);
-        void qei_set_invert_index(bool invert);
-        void qei_set_signal_mode(bool signal_mode);
-        void qei_set_capture_mode(bool capture_mode);
-
         int pulses;
-        float pulses_per_rev;
-        float revolutions;
+        int revolutions;
+        int velocity;
+        int ivelocity;
 };
 #endif

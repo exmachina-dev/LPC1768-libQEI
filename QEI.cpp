@@ -1,16 +1,9 @@
 #include "QEI.h"
 #include "LPC17XX.h"
 
-#include "cmsis.h"
-#include "pinmap.h"
+#include "QEI_api.h"
 
-static const PinMap PinMap_QEI[] = {    // Might be no needed
-    {P1_20, (int)LPC_QEI_BASE, 1},
-    {P1_23, (int)LPC_QEI_BASE, 1},
-    {P1_24, (int)LPC_QEI_BASE, 1},
-    {NC,    NC,     0}
-};
-
+<<<<<<< HEAD
 QEI::QEI(QEIConfig_t opts, int ppr) {
     LPC_SC->PCONP |= (1 << 18);         // Enable power for the QEI module
 
@@ -27,14 +20,14 @@ QEI::QEI(QEIConfig_t opts, int ppr) {
     pin_mode(P1_20, PullDown);
     pin_mode(P1_23, PullDown);
 
+=======
+QEI::QEI(QEIConfig_t opts) {
+    qei_init(opts);
+>>>>>>> 2f1147ca5a6cf27097a7fde6955619ee52ba6b2c
 
     if (opts & QEI_INDEX) {
-        pinmap_pinout(P1_24, PinMap_QEI);
-        pin_function(P1_24, 1);         // Enable index counting
-        pin_mode(P1_24, PullDown);
+        qei_init_index();
     }
-
-    NVIC_EnableIRQ(QEI_IRQn);
 
     if (opts & QEI_SIGNAL_MODE)
         qei_set_signal_mode(true);      // Set encoder mode to DIR/STEP mode (default A & B)
@@ -42,8 +35,8 @@ QEI::QEI(QEIConfig_t opts, int ppr) {
     if (opts & QEI_4XCOUNT)
         qei_set_capture_mode(true);     // Count A & B edges (more resolution but less range)
 
-    LPC_QEI->QEIMAXPOS = 0xFFFFFFFF;    // Allow QEI to count up to maximum range
-    LPC_QEI->FILTER = 3;                // Digital filter (debounce). In order
+    qei_set_max_pulses(0xFFFFFFFF);     // Allow QEI to count up to maximum range
+    qei_set_filter(3);                  // Digital filter (debounce). In order
                                         // to get counted, the new state must be
                                         // maintain n clock ticks. (0 to bypass)
 
@@ -51,52 +44,17 @@ QEI::QEI(QEIConfig_t opts, int ppr) {
 } 
 
 int QEI::getPulses(void) {
-    qei_get_pulses();
+    qei_get_pulses(&pulses);
     return pulses;
 }
 
-float QEI::getRevolutions(void) {
-    qei_get_revolutions();
-    return revolutions;
+int QEI::getVelocity(void) {
+    qei_get_velocity_capture(&velocity);
+    return velocity;
 }
 
-void QEI::qei_get_pulses(void) {
-    pulses = LPC_QEI->QEIPOS;           // Read position register
+int QEI::getInstantVelocity(void) {
+    qei_get_velocity(&ivelocity);
+    return ivelocity;
 }
 
-void QEI::qei_get_revolutions(void) {
-    qei_get_pulses();
-    revolutions = (float)(pulses / pulses_per_rev);
-}
-
-void QEI::qei_set_direction(bool invert) {
-    if (invert) {
-        LPC_QEI->QEICONF |= (1 << 0);   // Invert encoder direction
-    } else {
-        LPC_QEI->QEICONF &= ~(1 << 0);
-    }
-}
-
-void QEI::qei_set_invert_index(bool invert) {
-    if (invert) {
-        LPC_QEI->QEICONF |= (1 << 3);   // Invert revolution counter
-    } else {
-        LPC_QEI->QEICONF &= ~(1 << 3);
-    }
-}
-
-void QEI::qei_set_signal_mode(bool signal_mode) {
-    if (signal_mode) {
-        LPC_QEI->QEICONF |= (1 << 1);   // Set signal mode to DIR/STEP
-    } else {
-        LPC_QEI->QEICONF &= ~(1 << 1);  // Set signal mode to quadrature encoder
-    }
-}
-
-void QEI::qei_set_capture_mode(bool capture_mode) {
-    if (capture_mode) {
-        LPC_QEI->QEICONF |= (1 << 2);   // Count 4 edges (PhA + PhB)
-    } else {
-        LPC_QEI->QEICONF &= ~(1 << 2);  // Only count PhA edges
-    }
-}
