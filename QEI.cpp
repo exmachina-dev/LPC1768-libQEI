@@ -82,12 +82,7 @@ float QEI::getVelocity(void) {
 }
 
 float QEI::getSpeed(void) {
-    qei_get_velocity_capture(&velocity);
-    if (pulses_per_rev > 0) {
-        return ((velocity * velocity_frequency) / pulses_per_rev) * linear_factor;
-    } else {
-        return 0.0;
-    }
+    return getVelocity() * linear_factor;
 }
 
 
