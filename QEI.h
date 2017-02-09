@@ -19,13 +19,13 @@ class QEI {
         void setLinearFactor(float linear_factor);
 
         int getPulses(void);
-
         int getRevolutions(void);
 
         int getInstantVelocity(void);
 
         float getVelocity(void);
         float getSpeed(void);
+        float getPosition(void);
 
     private:
         int velocity_frequency;

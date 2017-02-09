@@ -85,4 +85,7 @@ float QEI::getSpeed(void) {
     return getVelocity() * linear_factor;
 }
 
+float QEI::getPosition(void) {
+    return (float)(getPulses() / pulses_per_rev) * linear_factor;
+}
 
