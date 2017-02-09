@@ -27,8 +27,6 @@ class QEI {
         float getVelocity(void);
         float getSpeed(void);
 
-        void setFilterDelay(int delay);
-
     private:
         int velocity_frequency;
         float pulses_per_rev;
