@@ -33,7 +33,7 @@ int qei_get_pclk_reg(uint8_t pclk_div) {
     }
 }
 
-void qei_init(QEIConfig_t opts) {
+void qei_init(void) {
     LPC_SC->PCONP |= (1 << 18);             // Enable power for the QEI module
 
     // set PCLK of QEI to CCLK/1 (1:0)

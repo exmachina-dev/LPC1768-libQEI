@@ -3,8 +3,8 @@
 
 #include "QEI_api.h"
 
-QEI::QEI(QEIConfig_t opts) {
-    qei_init(opts);
+QEI::QEI(int opts) {
+    qei_init();
 
     linear_factor = 1.0;
 
@@ -16,6 +16,8 @@ QEI::QEI(QEIConfig_t opts) {
         qei_set_signal_mode(true);      // Set encoder mode to DIR/STEP mode (default A & B)
     else
         qei_set_signal_mode(false);      // Set encoder mode to DIR/STEP mode (default A & B)
+
+    qei_set_direction(opts & QEI_INVERT);
 
     if (opts & QEI_4XCOUNT)
         qei_set_capture_mode(true);     // Count A & B edges (more resolution but less range)
@@ -64,6 +66,12 @@ int QEI::getRevolutions(void) {
     return revolutions;
 }
 
+int QEI::getInstantVelocity(void) {
+    qei_get_velocity(&ivelocity);
+    return ivelocity;
+}
+
+
 float QEI::getVelocity(void) {
     qei_get_velocity_capture(&velocity);
     if (pulses_per_rev > 0) {
@@ -82,8 +90,4 @@ float QEI::getSpeed(void) {
     }
 }
 
-int QEI::getInstantVelocity(void) {
-    qei_get_velocity(&ivelocity);
-    return ivelocity;
-}
 

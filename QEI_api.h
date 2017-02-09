@@ -8,7 +8,7 @@
 #include "pinmap.h"
 #include "QEI_config.h"
 
-void qei_init(QEIConfig_t opts);
+void qei_init(void);
 void qei_init_index(void);
 
 void qei_set_velocity_frequency(int frequency);

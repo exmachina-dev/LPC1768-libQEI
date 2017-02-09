@@ -9,7 +9,7 @@
 
 class QEI {
     public:
-        QEI(QEIConfig_t opts);
+        QEI(int opts);
 
         void setVelocityFrequency(int frequency);
 
