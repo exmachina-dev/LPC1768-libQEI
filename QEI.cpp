@@ -51,6 +51,13 @@ void QEI::setLinearFactor(float lfactor) {
     linear_factor = lfactor;
 }
 
+void QEI::setHome(float offset) {
+    qei_reset_position(true);
+    qei_reset_index(true);
+
+    position_offset = offset;
+}
+
 int QEI::getPulses(void) {
     qei_get_pulses(&pulses);
     if (pulses_per_rev > 0) {
@@ -86,6 +93,6 @@ float QEI::getSpeed(void) {
 }
 
 float QEI::getPosition(void) {
-    return (float)(getPulses() / pulses_per_rev) * linear_factor;
+    return position_offset + (float)(getPulses() / pulses_per_rev) * linear_factor;
 }
 

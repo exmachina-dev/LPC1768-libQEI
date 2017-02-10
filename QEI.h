@@ -17,6 +17,7 @@ class QEI {
         void setMaxPosition(int pulses);
         void setFilterFrequency(int filter_freq);
         void setLinearFactor(float linear_factor);
+        void setHome(float offset);
 
         int getPulses(void);
         int getRevolutions(void);
@@ -31,6 +32,7 @@ class QEI {
         int velocity_frequency;
         float pulses_per_rev;
         float linear_factor;
+        float position_offset;
         int pulses;
         int revolutions;
         int velocity;
