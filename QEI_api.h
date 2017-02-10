@@ -19,6 +19,12 @@ void qei_get_index_count(int *count);
 void qei_get_velocity(int *velocity);
 void qei_get_velocity_capture(int *velocity_capture);
 void qei_set_filter(int filter_frequency);
+
+void qei_reset_position(bool reset);
+void qei_reset_position_on_index(bool reset);
+void qei_reset_velocity(bool reset);
+void qei_reset_index(bool reset);
+
 void qei_set_direction(bool invert);
 void qei_set_invert_index(bool invert);
 void qei_set_signal_mode(bool signal_mode);

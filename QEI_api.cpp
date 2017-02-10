@@ -99,6 +99,27 @@ void qei_set_filter(int filter_frequency) {
     LPC_QEI->FILTER = sample_number;        // Set filter value
 }
 
+// QEICON control
+void qei_reset_position(bool reset) {
+    if (reset)
+        LPC_QEI->QEICON |= (1 << 0);       // Reset position register
+}
+
+void qei_reset_position on index(bool reset) {
+    if (reset)
+        LPC_QEI->QEICON |= (1 << 1);       // Reset position when index pulse occurs
+}
+
+void qei_reset_velocity(bool reset) {
+    if (reset)
+        LPC_QEI->QEICON |= (1 << 2);       // Reset velocity register
+}
+
+void qei_reset_index(bool reset) {
+    if (reset)
+        LPC_QEI->QEICON |= (1 << 3);       // Reset index register
+}
+
 // QEICONF options
 void qei_set_direction(bool invert) {
     if (invert) {
