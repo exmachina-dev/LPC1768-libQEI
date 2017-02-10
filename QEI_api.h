@@ -2,7 +2,7 @@
 #define QEI_API_H_
 
 #ifndef TARGET_LPC176X
-#error This library is only compatible with the LPC1768
+#error This library is only compatible with the LPC176X
 #endif
 
 #include "pinmap.h"
