@@ -105,7 +105,7 @@ void qei_reset_position(bool reset) {
         LPC_QEI->QEICON |= (1 << 0);       // Reset position register
 }
 
-void qei_reset_position on index(bool reset) {
+void qei_reset_position_on_index(bool reset) {
     if (reset)
         LPC_QEI->QEICON |= (1 << 1);       // Reset position when index pulse occurs
 }
