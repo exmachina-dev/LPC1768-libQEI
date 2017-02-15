@@ -7,6 +7,7 @@ QEI::QEI(int opts) {
     qei_init();
 
     linear_factor = 1.0;
+    position_offset = 0.0;
 
     if (opts & QEI_INDEX) {
         qei_init_index();
