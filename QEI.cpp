@@ -18,7 +18,10 @@ QEI::QEI(int opts) {
     else
         qei_set_signal_mode(false);      // Set encoder mode to DIR/STEP mode (default A & B)
 
-    qei_set_direction(opts & QEI_INVERT);
+    if (opts & QEI_INVERT)
+        qei_set_direction(true);
+    else
+        qei_set_direction(false);
 
     if (opts & QEI_4XCOUNT)
         qei_set_capture_mode(true);     // Count A & B edges (more resolution but less range)
